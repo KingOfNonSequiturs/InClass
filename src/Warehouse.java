@@ -8,6 +8,10 @@
  * storing and shipping of items
  * through itemCodes
  * 
+ * using the receive(int itemCode, int itemCount) and 
+ * ship(int itemCode, int itemCount) methods to update 
+ * its contents.
+ * 
  * 
  */
 
@@ -208,17 +212,25 @@ public class Warehouse {
 	 */
 	public String toString() {
 		
-		String idsAndQuantities = "[ ";
+		// create a string to store the warehouse data
+		// and add a cap to the start
+		String codesAndQuantities = "[ ";
 		
+		// loop through the different item codes that the warehouse contains
 		for (int i = 0; i < amountOfItemCodes; i++) {
-			if (i > 0) idsAndQuantities += "], ";
-			idsAndQuantities +=  "[code:" + itemCodes[i] + ", qty:" + itemStock[i];
+			// seperate previous information
+			if (i > 0) codesAndQuantities += ", ";
+			// add the item code and the amount of the item to the string
+			codesAndQuantities +=  "[code:" + itemCodes[i] + ", qty:" + itemStock[i] + "]";
 		}
 		
-		if (amountOfItemCodes <= 0) idsAndQuantities += "Empty";
-		idsAndQuantities += " ]";
+		// if there are no item codes in the warehouse add empty to the string
+		if (amountOfItemCodes <= 0) codesAndQuantities += "Empty";
+		// cap off the string
+		codesAndQuantities += " ]";
 		
-		return "Warehouse: [ size: " + size + ", limitPerItem: " + limitPerItem + ", storedItems: " + idsAndQuantities + " ]";
+		// return the size, limit per item, item codes and their quantities
+		return "Warehouse: [ size: " + size + ", limitPerItem: " + limitPerItem + ", storedItems: " + codesAndQuantities + " ]";
 	}
 	
 }
