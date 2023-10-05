@@ -171,24 +171,33 @@ public class Warehouse {
 	 * if the item doesn't exist it will return 0
 	 */
 	public int ship(int itemCode, int itemCount) {
-		
+
+		// get index of the items item code
 		int index = searchArray(itemCodes, itemCode);
 		if (index < 0) {
 			return 0;
 		}
 		
-		int amountRejected = itemCount - itemStock[index];
-		amountRejected = Math.max(0,amountRejected);
-		
-		itemStock[index] -= itemCount - amountRejected;
-		warehouseTotalStock -= itemCount - amountRejected;
-		
-		if (itemStock[index] <= 0) {
+		// check for boxes that don't exist
+		int amountUnavailable = itemCount - itemStock[index];
+		// cannot ship a negative amount of packages
+		amountUnavailable = Math.max(0,amountUnavailable);
+
+		// remove the items that were available from the items stock
+		itemStock[index] -= itemCount - amountUnavailable;
+		// and the total stored items of the warehouse
+		warehouseTotalStock -= itemCount - amountUnavailable;
+
+		// if the amount of items in stock is less than 1 
+		if (itemStock[index] < 1) {
+			// remove the item code from the warehouse
 			decreaseArraysFromIndex(index, itemCodes, itemStock);
+			// decrement the amount of item codes
 			amountOfItemCodes--;
 		} 
 		
-		return itemCount - amountRejected;
+		//return the amount of items
+		return itemCount - amountUnavailable;
 		
 	}
 	
