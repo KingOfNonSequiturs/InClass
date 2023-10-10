@@ -1,0 +1,40 @@
+
+public class ArrayListC {
+
+	private ArrayListC leadingArray;
+	private ArrayListC trailingArray;
+	private int startingIndex;
+	
+	private Object[] array;
+	private int currentIndex = 0;
+	
+	public ArrayListC() {
+		array = new Object[10];
+		startingIndex = 0;
+	}
+	
+	public ArrayListC(ArrayListC leadingArray) {
+		this.leadingArray = leadingArray;
+		startingIndex = (this.leadingArray.getLength() + this.leadingArray.getStartingIndex());
+		array = new Object[startingIndex*2];
+	}
+	
+	public int getLength() {
+		return array.length;
+	}
+	
+	public int getStartingIndex() {
+		return array.length;
+	}
+	
+	public void add(Object o) {
+		if (currentIndex < array.length) {
+			array[currentIndex] = o;
+			currentIndex++;
+		} else {
+			trailingArray = new ArrayListC(this);
+			trailingArray.add(o);
+		}
+	}
+	
+}
